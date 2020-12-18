@@ -1,0 +1,23 @@
+.header {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.header__left h1 {
+  color: white;
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
