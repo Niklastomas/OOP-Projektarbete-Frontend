@@ -1,5 +1,14 @@
 .home {
   background-color: #222222;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+}
+
+.home__content {
+  height: auto;
+  width: 90vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
 }

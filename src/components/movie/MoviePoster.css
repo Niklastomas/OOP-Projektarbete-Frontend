@@ -1,0 +1,11 @@
+.moviePoster {
+  height: 300px;
+  border-radius: 7px;
+  margin: 10px;
+  transition: 300ms ease-in-out;
+}
+
+.moviePoster:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
