@@ -1,0 +1,15 @@
+.movieList {
+  max-width: 1600px;
+  margin: 10px auto;
+}
+
+.movieList__movies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.movieList h1 {
+  margin-left: 50px;
+  color: white;
+}
