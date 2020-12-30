@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/header/Header';
-import MoviePoster from '../../components/movie/MoviePoster';
-import './HomeView.css';
-
-import axios from '../../utils/axios';
 import MovieList from '../../components/movie/MovieList';
+import axios from '../../utils/axios';
+import './TopRatedView.css';
 
-// https://image.tmdb.org/t/p/w500
-
-function HomeView() {
+function TopRatedView() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     const getMovies = async () => {
-      const { data } = await axios.get('api/Movie/Popular');
+      const { data } = await axios.get('api/Movie/TopRated');
       console.log(data.results);
       setMovies(data.results);
     };
@@ -27,4 +23,4 @@ function HomeView() {
   );
 }
 
-export default HomeView;
+export default TopRatedView;
