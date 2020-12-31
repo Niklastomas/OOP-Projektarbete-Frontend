@@ -6,19 +6,50 @@ import './TopRatedView.css';
 
 function TopRatedView() {
   const [movies, setMovies] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getMovies = async () => {
-      const { data } = await axios.get('api/Movie/TopRated');
-      console.log(data.results);
-      setMovies(data.results);
+      setLoading(true);
+      try {
+        const { data } = await axios.get('api/Movie/Toprated/1');
+        setMovies(data.results);
+        setTotalPages(data.total_pages);
+      } catch (error) {
+        console.error(error.message);
+        setError('No Records Found');
+      }
+      setLoading(false);
     };
     getMovies();
   }, []);
+
+  const handlePageChange = async (page) => {
+    setLoading(true);
+    try {
+      setError('');
+      const { data } = await axios.get(`api/Movie/Toprated/${page}`);
+      setMovies(data.results);
+    } catch (error) {
+      console.error(error.message);
+      setError('No Records Found');
+    }
+    setLoading(false);
+  };
   return (
-    <div className='home'>
+    <div className='toprated'>
       <Header />
-      <MovieList movies={movies} />
+      <div className='toprated__content'>
+        <MovieList
+          movies={movies}
+          onPageChange={handlePageChange}
+          totalPages={totalPages}
+          error={error}
+          loading={loading}
+        />
+      </div>
     </div>
   );
 }

@@ -1,10 +1,9 @@
-.toprated {
+.upcoming {
   background-color: #222222;
   width: 100%;
   min-height: 100vh;
 }
-
-.toprated__content {
+.upcoming__content {
   display: flex;
   justify-content: center;
   align-items: center;

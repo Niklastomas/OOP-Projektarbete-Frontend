@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/header/Header';
-import './HomeView.css';
-
-import axios from '../../utils/axios';
 import MovieList from '../../components/movie/MovieList';
+import axios from '../../utils/axios';
+import './UpcomingView.css';
 
-// https://image.tmdb.org/t/p/w500
-
-function HomeView() {
+function UpcomingView() {
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [error, setError] = useState('');
@@ -17,7 +14,7 @@ function HomeView() {
     const getMovies = async () => {
       setLoading(true);
       try {
-        const { data } = await axios.get('api/Movie/Popular/1');
+        const { data } = await axios.get('api/Movie/Upcoming/1');
         setMovies(data.results);
         setTotalPages(data.total_pages);
       } catch (error) {
@@ -33,7 +30,7 @@ function HomeView() {
     setLoading(true);
     try {
       setError('');
-      const { data } = await axios.get(`api/Movie/Popular/${page}`);
+      const { data } = await axios.get(`api/Movie/Upcoming/${page}`);
       setMovies(data.results);
     } catch (error) {
       console.error(error.message);
@@ -42,9 +39,9 @@ function HomeView() {
     setLoading(false);
   };
   return (
-    <div className='home'>
+    <div className='upcoming'>
       <Header />
-      <div className='home__content'>
+      <div className='upcoming__content'>
         <MovieList
           movies={movies}
           onPageChange={handlePageChange}
@@ -57,4 +54,4 @@ function HomeView() {
   );
 }
 
-export default HomeView;
+export default UpcomingView;

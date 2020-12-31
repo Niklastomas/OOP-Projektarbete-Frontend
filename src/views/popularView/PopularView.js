@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/header/Header';
-import './HomeView.css';
-
-import axios from '../../utils/axios';
 import MovieList from '../../components/movie/MovieList';
+import axios from '../../utils/axios';
+import './PopularView.css';
 
-// https://image.tmdb.org/t/p/w500
-
-function HomeView() {
+function PopularView() {
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [error, setError] = useState('');
@@ -30,7 +27,6 @@ function HomeView() {
   }, []);
 
   const handlePageChange = async (page) => {
-    setLoading(true);
     try {
       setError('');
       const { data } = await axios.get(`api/Movie/Popular/${page}`);
@@ -39,12 +35,11 @@ function HomeView() {
       console.error(error.message);
       setError('No Records Found');
     }
-    setLoading(false);
   };
   return (
-    <div className='home'>
+    <div className='popular'>
       <Header />
-      <div className='home__content'>
+      <div className='popular__content'>
         <MovieList
           movies={movies}
           onPageChange={handlePageChange}
@@ -57,4 +52,4 @@ function HomeView() {
   );
 }
 
-export default HomeView;
+export default PopularView;

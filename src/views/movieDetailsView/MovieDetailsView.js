@@ -1,6 +1,5 @@
-import { Fade } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import axios from '../../utils/axios';
 import DescriptionIcon from '@material-ui/icons/Description';
@@ -48,6 +47,7 @@ function MovieDetailsView() {
                   type='text/html'
                   src={`http://www.youtube.com/embed/${movieInfo.trailer.results[0].key}`}
                   frameBorder='0'
+                  allowFullScreen
                 ></iframe>
               ) : (
                 <div className='movieDetail__trailerNotFound'>
