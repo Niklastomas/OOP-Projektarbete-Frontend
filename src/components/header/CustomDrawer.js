@@ -5,7 +5,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 import StarIcon from '@material-ui/icons/Star';

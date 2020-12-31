@@ -28,12 +28,14 @@ function TrendingView() {
   return (
     <div className='trending'>
       <Header />
-      <MovieList
-        pagination={false}
-        movies={movies}
-        error={error}
-        loading={loading}
-      />
+      <div className='trending__content'>
+        <MovieList
+          pagination={false}
+          movies={movies}
+          error={error}
+          loading={loading}
+        />
+      </div>
     </div>
   );
 }

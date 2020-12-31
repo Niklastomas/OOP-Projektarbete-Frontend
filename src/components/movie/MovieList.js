@@ -4,6 +4,20 @@ import './MovieList.css';
 import { Link } from 'react-router-dom';
 import { Pagination } from '@material-ui/lab';
 import Loader from '../loader/Loader';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  root: {
+    '& .Mui-selected': {
+      backgroundColor: '#E50914',
+    },
+  },
+  ul: {
+    '& .MuiPaginationItem-root': {
+      color: '#fff',
+    },
+  },
+});
 
 function MovieList({
   movies,
@@ -13,6 +27,8 @@ function MovieList({
   loading,
   pagination = true,
 }) {
+  const classes = useStyles();
+
   const handleChange = (event, value) => {
     onPageChange(value);
   };
@@ -33,7 +49,9 @@ function MovieList({
       {pagination && (
         <Pagination
           onChange={handleChange}
-          color='secondary'
+          classes={classes}
+          variant='outlined'
+          // color='secondary'
           style={{
             margin: '20px',
             display: 'flex',

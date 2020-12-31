@@ -4,12 +4,14 @@ import './Header.css';
 import TheatersIcon from '@material-ui/icons/Theaters';
 import { Avatar } from '@material-ui/core';
 
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import MenuButton from './MenuButton';
 import CustomDrawer from './CustomDrawer';
 
 function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const params = useParams();
+  console.log(params);
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -23,10 +25,18 @@ function Header() {
         </div>
       </Link>
       <div className='header__center'>
-        <Link to='/toprated'>Top Rated</Link>
-        <Link to='/popular'>Popular</Link>
-        <Link to='/trending'>Trending</Link>
-        <Link to='/upcoming'>Upcoming</Link>
+        <NavLink activeClassName='is-active' to='/toprated'>
+          Top Rated
+        </NavLink>
+        <NavLink activeClassName='is-active' to='/popular'>
+          Popular
+        </NavLink>
+        <NavLink activeClassName='is-active' to='/trending'>
+          Trending
+        </NavLink>
+        <NavLink activeClassName='is-active' to='/upcoming'>
+          Upcoming
+        </NavLink>
       </div>
 
       <div className='header__right'>

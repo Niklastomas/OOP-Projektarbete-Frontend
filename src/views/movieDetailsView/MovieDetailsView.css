@@ -5,6 +5,10 @@
   color: white;
 }
 
+.movieDetail h1 {
+  text-align: center;
+}
+
 .movieDetail__container {
   margin: 10px auto;
   max-width: 1200px;

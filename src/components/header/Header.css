@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text&display=swap');
+
 .header {
   background-color: rgba(0, 0, 0, 0.4);
   padding: 10px;
@@ -14,6 +16,12 @@
   align-items: center;
   padding: 5px;
   margin-left: 10px;
+}
+
+.header__left h1 {
+  font-family: 'Big Shoulders Stencil Text', cursive;
+  letter-spacing: 3px;
+  font-weight: 400;
 }
 
 .header__center {
@@ -44,6 +52,10 @@
 
 .header a:hover {
   color: #e50914;
+}
+
+.is-active {
+  border-bottom: 2px solid #e50914;
 }
 
 @media screen and (max-width: 800px) {
