@@ -6,7 +6,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 
 import './MovieDetailsView.css';
 import Loader from '../../components/loader/Loader';
-import { Grow, Slide } from '@material-ui/core';
+import { Grow } from '@material-ui/core';
 
 function MovieDetailsView() {
   const { id } = useParams();

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import HomeView from './views/homeView/HomeView';
+import LoginView from './views/loginView/LoginView';
 import MovieDetailsView from './views/movieDetailsView/MovieDetailsView';
 import PopularView from './views/popularView/PopularView';
 import TopRatedView from './views/topRatedView/TopRatedView';
@@ -17,6 +18,7 @@ function App() {
           <Route path='/popular' component={PopularView} />
           <Route path='/trending' component={TrendingView} />
           <Route path='/upcoming' component={UpcomingView} />
+          <Route path='/login' component={LoginView} />
           <Route exact path='/' component={HomeView} />
         </Switch>
       </Router>
