@@ -1,0 +1,7 @@
+.loginForm {
+  height: 220px;
+  /* background-color: blue; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

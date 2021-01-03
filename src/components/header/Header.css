@@ -50,6 +50,11 @@
   margin-right: 10px;
 }
 
+.header__avatar:hover {
+  cursor: pointer;
+  color: black;
+}
+
 .header a:hover {
   color: #e50914;
 }

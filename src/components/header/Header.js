@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import './Header.css';
 
 import TheatersIcon from '@material-ui/icons/Theaters';
-import { Avatar } from '@material-ui/core';
 
-import { Link, NavLink, useParams } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import MenuButton from './MenuButton';
 import CustomDrawer from './CustomDrawer';
+import { useSelector } from 'react-redux';
+import UserMenu from './menu/UserMenu';
 
 function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const params = useParams();
-  console.log(params);
+  const { user } = useSelector((state) => state.user);
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -44,7 +44,16 @@ function Header() {
           <MenuButton onClick={toggleDrawer} />
           <CustomDrawer open={drawerOpen} onClose={toggleDrawer} />
         </div>
-        <Avatar style={{ backgroundColor: '#E50914' }}>N</Avatar>
+
+        {user ? (
+          <div className='header__avatar'>
+            <UserMenu name={user.username.substring(0, 1)} />
+          </div>
+        ) : (
+          <NavLink activeClassName='is-active' to='/login'>
+            Login
+          </NavLink>
+        )}
       </div>
     </div>
   );
