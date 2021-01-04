@@ -9,8 +9,14 @@ const initialState = {
   error: null,
 };
 
-export const login = createAsyncThunk('api/Account/Login', async (user) => {
+export const login = createAsyncThunk('Account/Login', async (user) => {
   const { data } = await axios.post('/api/Account/Login', user);
+  sessionStorage.setItem('user', JSON.stringify(data));
+  return data;
+});
+
+export const register = createAsyncThunk('Account/Create', async (user) => {
+  const { data } = await axios.post('/api/Account/Create', user);
   sessionStorage.setItem('user', JSON.stringify(data));
   return data;
 });
@@ -38,6 +44,17 @@ const userSlice = createSlice({
     [login.rejected]: (state, action) => {
       state.loading = false;
       state.error = 'Wrong username or password';
+    },
+    [register.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [register.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+    },
+    [register.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = 'Invalid username or password';
     },
   },
 });

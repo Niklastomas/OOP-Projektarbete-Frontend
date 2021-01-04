@@ -57,97 +57,89 @@ function RegisterForm({ onSubmit }) {
     });
   };
 
-  const handleShowPassword = (e) => {
-    const { name } = e.target;
-
-    setShowPassword((prevValue) => {
-      return {
-        ...prevValue,
-        [name]: true,
-      };
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(input);
+
     console.log('submit');
   };
   return (
-    <form onSubmit={handleSubmit} className='registerForm'>
-      <FormControl classes={classes} style={{ width: '250px' }}>
-        <InputLabel htmlFor='email'>Email</InputLabel>
-        <Input
-          required
-          id='email'
-          type='email'
-          value={input.email}
-          name='email'
-          onChange={handleChange}
-        />
-      </FormControl>
-      <FormControl classes={classes} style={{ width: '250px' }}>
-        <InputLabel htmlFor='password'>Password</InputLabel>
-        <Input
-          required
-          id='password'
-          type={showPassword ? 'text' : 'password'}
-          value={input.password}
-          name='password'
-          onChange={handleChange}
-          endAdornment={
-            <InputAdornment position='end'>
-              <IconButton
-                aria-label='toggle password visibility'
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <Visibility style={{ color: 'white' }} />
-                ) : (
-                  <VisibilityOff style={{ color: 'white' }} />
-                )}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </FormControl>
-      <FormControl classes={classes} style={{ width: '250px' }}>
-        <InputLabel htmlFor='comfirm-password'>Confirm Password</InputLabel>
-        <Input
-          required
-          id='confirm-password'
-          type={showConfirmPassword ? 'text' : 'password'}
-          value={input.confirmPassword}
-          name='confirmPassword'
-          onChange={handleChange}
-          endAdornment={
-            <InputAdornment position='end'>
-              <IconButton
-                aria-label='toggle password visibility'
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                {showConfirmPassword ? (
-                  <Visibility style={{ color: 'white' }} />
-                ) : (
-                  <VisibilityOff style={{ color: 'white' }} />
-                )}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </FormControl>
-      <Button
-        type='submit'
-        style={{
-          backgroundColor: '#e50914',
-          color: 'white',
-          margin: '10px 0',
-          width: '250px',
-        }}
-      >
-        Register
-      </Button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit} className='registerForm'>
+        <FormControl classes={classes} style={{ width: '250px' }}>
+          <InputLabel htmlFor='email'>Email</InputLabel>
+          <Input
+            required
+            id='email'
+            type='email'
+            value={input.email}
+            name='email'
+            onChange={handleChange}
+          />
+        </FormControl>
+        <FormControl classes={classes} style={{ width: '250px' }}>
+          <InputLabel htmlFor='password'>Password</InputLabel>
+          <Input
+            required
+            id='password'
+            type={showPassword ? 'text' : 'password'}
+            value={input.password}
+            name='password'
+            onChange={handleChange}
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton
+                  aria-label='toggle password visibility'
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <Visibility style={{ color: 'white' }} />
+                  ) : (
+                    <VisibilityOff style={{ color: 'white' }} />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+        <FormControl classes={classes} style={{ width: '250px' }}>
+          <InputLabel htmlFor='comfirm-password'>Confirm Password</InputLabel>
+          <Input
+            required
+            id='confirm-password'
+            type={showConfirmPassword ? 'text' : 'password'}
+            value={input.confirmPassword}
+            name='confirmPassword'
+            onChange={handleChange}
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton
+                  aria-label='toggle password visibility'
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? (
+                    <Visibility style={{ color: 'white' }} />
+                  ) : (
+                    <VisibilityOff style={{ color: 'white' }} />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+        <Button
+          type='submit'
+          style={{
+            backgroundColor: '#e50914',
+            color: 'white',
+            margin: '10px 0',
+            width: '250px',
+          }}
+        >
+          Register
+        </Button>
+      </form>
+    </>
   );
 }
 

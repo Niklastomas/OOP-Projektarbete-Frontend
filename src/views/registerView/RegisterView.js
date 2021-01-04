@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import RegisterForm from '../../components/forms/RegisterForm';
 import Header from '../../components/header/Header';
 import Loader from '../../components/loader/Loader';
-import { removeErrorMessage } from '../../redux/userSlice';
+import { register, removeErrorMessage } from '../../redux/userSlice';
 import './RegisterView.css';
 
 function RegisterView() {
@@ -13,8 +13,16 @@ function RegisterView() {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = async (user) => {
-    console.log('Hej');
+  const handleSubmit = (user) => {
+    if (user.password === user.confirmPassword) {
+      if (user.password.length >= 6) {
+        dispatch(register(user));
+      } else {
+        alert('Password must contain atleat 6 characters');
+      }
+    } else {
+      alert('password does not match');
+    }
   };
 
   const closeErrorMessage = () => {
