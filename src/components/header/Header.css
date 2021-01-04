@@ -48,6 +48,11 @@
   display: flex;
   align-items: center;
   margin-right: 10px;
+  max-width: 250px;
+}
+
+.header__avatar {
+  margin: 0 10px;
 }
 
 .header__avatar:hover {

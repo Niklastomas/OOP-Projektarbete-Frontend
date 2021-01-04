@@ -8,6 +8,7 @@ import MenuButton from './MenuButton';
 import CustomDrawer from './CustomDrawer';
 import { useSelector } from 'react-redux';
 import UserMenu from './menu/UserMenu';
+import SearchField from './searchField/SearchField';
 
 function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -15,6 +16,10 @@ function Header() {
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
+  };
+
+  const handleSearch = (searchText) => {
+    console.log(searchText);
   };
   return (
     <div className='header'>
@@ -46,9 +51,12 @@ function Header() {
         </div>
 
         {user ? (
-          <div className='header__avatar'>
-            <UserMenu name={user.username.substring(0, 1)} />
-          </div>
+          <>
+            <SearchField handleSearch={handleSearch} />
+            <div className='header__avatar'>
+              <UserMenu name={user.username.substring(0, 1)} />
+            </div>
+          </>
         ) : (
           <NavLink activeClassName='is-active' to='/login'>
             Login
