@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import './SearchField.css';
-import SearchIcon from '@material-ui/icons/Search';
-import {
-  FormControl,
-  Input,
-  InputBase,
-  InputLabel,
-  makeStyles,
-} from '@material-ui/core';
+import { FormControl, Input, InputLabel, makeStyles } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -32,13 +26,14 @@ const useStyles = makeStyles({
   },
 });
 
-function SearchField({ handleSearch }) {
+function SearchField() {
   const classes = useStyles();
   const [searchText, setSearchText] = useState('');
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleSearch(searchText);
+    history.push(`/search/${searchText}`);
   };
 
   return (

@@ -18,9 +18,6 @@ function Header() {
     setDrawerOpen(!drawerOpen);
   };
 
-  const handleSearch = (searchText) => {
-    console.log(searchText);
-  };
   return (
     <div className='header'>
       <Link to='/'>
@@ -52,7 +49,7 @@ function Header() {
 
         {user ? (
           <>
-            <SearchField handleSearch={handleSearch} />
+            <SearchField />
             <div className='header__avatar'>
               <UserMenu name={user.username.substring(0, 1)} />
             </div>

@@ -43,10 +43,16 @@ function MovieDetailsView() {
             <Grow in={true} timeout={1000}>
               <a href={movieInfo.movie.homepage}>
                 <div className='movieDetail__poster'>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${movieInfo.movie.poster_path}`}
-                    alt='Poster'
-                  />
+                  {movieInfo.movie.poster_path ? (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500${movieInfo.movie.poster_path}`}
+                      alt='Poster'
+                    />
+                  ) : (
+                    <div className='movieDetail__posterNotFound'>
+                      <h3>{movieInfo.movie.title}</h3>
+                    </div>
+                  )}
 
                   <p>
                     Release: <strong>{movieInfo.movie.release_date}</strong>

@@ -41,7 +41,7 @@ function MovieList({
         ) : (
           movies?.map((movie) => (
             <Link to={`/movie/${movie.id}`} key={movie.id}>
-              <MoviePoster poster={movie.poster_path} />
+              <MoviePoster poster={movie.poster_path} title={movie.title} />
             </Link>
           ))
         )}

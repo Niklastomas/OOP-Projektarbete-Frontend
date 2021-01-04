@@ -5,6 +5,7 @@ import LoginView from './views/loginView/LoginView';
 import MovieDetailsView from './views/movieDetailsView/MovieDetailsView';
 import PopularView from './views/popularView/PopularView';
 import RegisterView from './views/registerView/RegisterView';
+import SearchView from './views/searchView/SearchView';
 import TopRatedView from './views/topRatedView/TopRatedView';
 import TrendingView from './views/trendingView/TrendingView';
 import UpcomingView from './views/upcomingView/UpcomingView';
@@ -21,6 +22,7 @@ function App() {
           <Route path='/upcoming' component={UpcomingView} />
           <Route path='/login' component={LoginView} />
           <Route path='/register' component={RegisterView} />
+          <Route path='/search/:searchText' component={SearchView} />
           <Route exact path='/' component={HomeView} />
         </Switch>
       </Router>

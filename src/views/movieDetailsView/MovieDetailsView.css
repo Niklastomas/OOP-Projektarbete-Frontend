@@ -65,6 +65,17 @@
   height: 390px;
 }
 
+.movieDetail__posterNotFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 390px;
+  width: 260px;
+  margin: 10px;
+  background-color: black;
+}
+
 .movieDetail__trailerNotFound {
   display: flex;
   justify-content: center;
