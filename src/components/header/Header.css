@@ -68,7 +68,7 @@
   border-bottom: 2px solid #e50914;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 850px) {
   .header__center {
     display: none;
   }
@@ -76,5 +76,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .header__right {
+    display: none;
   }
 }

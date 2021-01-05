@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import MovieList from '../../components/movie/MovieList';
@@ -10,13 +11,18 @@ function SearchView() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { searchText } = useParams();
+  const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
-    console.log(searchText);
     const getMovies = async () => {
       setLoading(true);
       try {
-        const { data } = await axios.get(`api/Movie/${searchText}/1`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        const { data } = await axios.get(`api/Movie/${searchText}/1`, config);
         setMovies(data.results);
         setTotalPages(data.total_pages);
       } catch (error) {
@@ -26,7 +32,7 @@ function SearchView() {
       setLoading(false);
     };
     getMovies();
-  }, [searchText]);
+  }, [searchText, user.token]);
 
   const handlePageChange = async (page) => {
     try {

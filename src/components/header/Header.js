@@ -41,12 +41,12 @@ function Header() {
         </NavLink>
       </div>
 
-      <div className='header__right'>
-        <div className='header__menu'>
-          <MenuButton onClick={toggleDrawer} />
-          <CustomDrawer open={drawerOpen} onClose={toggleDrawer} />
-        </div>
+      <div className='header__menu'>
+        <MenuButton onClick={toggleDrawer} />
+        <CustomDrawer open={drawerOpen} onClose={toggleDrawer} />
+      </div>
 
+      <div className='header__right'>
         {user ? (
           <>
             <SearchField />

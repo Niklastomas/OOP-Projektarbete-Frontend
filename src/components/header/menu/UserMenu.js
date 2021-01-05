@@ -1,4 +1,4 @@
-import { Avatar, makeStyles, Menu, MenuItem, Paper } from '@material-ui/core';
+import { Avatar, Menu, MenuItem, Paper } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { signOut } from '../../../redux/userSlice';
