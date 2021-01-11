@@ -13,7 +13,7 @@ function LoginView() {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = async (user) => {
+  const handleSubmit = (user) => {
     dispatch(login(user));
   };
 

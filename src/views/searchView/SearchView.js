@@ -37,7 +37,15 @@ function SearchView() {
   const handlePageChange = async (page) => {
     try {
       setError('');
-      const { data } = await axios.get(`api/Movie/${searchText}/${page}`);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `api/Movie/${searchText}/${page}`,
+        config
+      );
       setMovies(data.results);
     } catch (error) {
       console.error(error.message);

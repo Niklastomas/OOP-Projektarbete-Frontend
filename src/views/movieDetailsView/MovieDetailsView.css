@@ -86,6 +86,12 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+.movieDetail__favorite {
+  display: flex;
+  margin: 0 10px;
+  justify-content: center;
+}
+
 @media screen and (max-width: 600px) {
   .player {
     width: 350px;
