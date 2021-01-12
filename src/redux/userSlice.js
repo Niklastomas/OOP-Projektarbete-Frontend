@@ -62,8 +62,6 @@ export const addUserMovie = createAsyncThunk(
         Authorization: `Bearer ${info.user.token}`,
       },
     };
-    console.log(config);
-    console.log(info.movieId);
     const { data } = await axios.post(
       `/api/User/AddMovie/${info.movieId}`,
       {},
@@ -80,6 +78,7 @@ const userSlice = createSlice({
     signOut: (state) => {
       state.user = null;
       sessionStorage.removeItem('user');
+      sessionStorage.removeItem('favoriteMovies');
     },
     removeErrorMessage: (state) => {
       state.error = null;
@@ -115,6 +114,7 @@ const userSlice = createSlice({
     [addUserMovie.fulfilled]: (state, action) => {
       state.loading = false;
       state.favorites = state.favorites.concat(action.payload);
+      sessionStorage.setItem('favoriteMovies', JSON.stringify(state.favorites));
     },
     [deleteUserMovie.pending]: (state, action) => {
       state.loading = true;
@@ -125,6 +125,7 @@ const userSlice = createSlice({
       state.favorites = state.favorites.filter(
         (movie) => movie.id !== action.payload
       );
+      sessionStorage.setItem('favoriteMovies', JSON.stringify(state.favorites));
     },
   },
 });

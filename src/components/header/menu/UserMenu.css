@@ -1,3 +1,9 @@
 .userMenu__avatar {
   color: black;
 }
+
+.userMenu__icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

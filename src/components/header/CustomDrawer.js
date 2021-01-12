@@ -7,12 +7,13 @@ import {
   ListItemText,
 } from '@material-ui/core';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 import StarIcon from '@material-ui/icons/Star';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOut } from '../../redux/userSlice';
@@ -20,6 +21,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
 function CustomDrawer({ open, onClose }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { user } = useSelector((state) => state.user);
   return (
     <Drawer anchor='top' open={open} onClose={onClose}>
@@ -67,6 +69,17 @@ function CustomDrawer({ open, onClose }) {
       </List>
       <Divider />
       <List>
+        {user && (
+          <ListItem button>
+            <ListItemIcon>
+              <FavoriteIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary='Favorites'
+              onClick={() => history.push('/favorites')}
+            />
+          </ListItem>
+        )}
         {user ? (
           <ListItem button>
             <ListItemIcon>

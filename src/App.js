@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './routes/PrivateRoute';
+import FavoritesView from './views/favoritesView/FavoritesView';
 import HomeView from './views/homeView/HomeView';
 import LoginView from './views/loginView/LoginView';
 import MovieDetailsView from './views/movieDetailsView/MovieDetailsView';
@@ -24,6 +25,8 @@ function App() {
           <Route path='/login' component={LoginView} />
           <Route path='/register' component={RegisterView} />
           <PrivateRoute path='/search/:searchText' component={SearchView} />
+          <PrivateRoute path='/favorites' component={FavoritesView} />
+
           <Route exact path='/' component={HomeView} />
         </Switch>
       </Router>

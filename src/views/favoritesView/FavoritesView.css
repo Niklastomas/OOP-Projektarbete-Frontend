@@ -1,0 +1,11 @@
+.favorites {
+  background-color: #222222;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.favorites__content h1 {
+  text-align: center;
+  color: white;
+  padding: 10px;
+}
