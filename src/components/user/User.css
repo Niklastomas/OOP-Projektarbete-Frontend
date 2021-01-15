@@ -1,0 +1,23 @@
+.user {
+    width: 300px;
+    padding: 10px;
+    color: white;
+    transition: 0.3s all;
+}
+
+.user__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user hr {
+    border: none;
+   border-bottom: 3px solid #e50914;
+}
+
+.user h3:hover {
+    cursor: pointer;
+    color: #e50914;
+    
+}

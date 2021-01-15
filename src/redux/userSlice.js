@@ -5,10 +5,12 @@ const userFromSessionStorage = JSON.parse(sessionStorage.getItem('user'));
 const favoriteMoviesFromSessionStorage = JSON.parse(
   sessionStorage.getItem('favoriteMovies')
 );
+const friendsFromSessionStorage = JSON.parse(sessionStorage.getItem('friends'));
 
 const initialState = {
   user: userFromSessionStorage,
   favorites: favoriteMoviesFromSessionStorage,
+  friends: friendsFromSessionStorage,
   loading: false,
   error: null,
 };
@@ -22,13 +24,17 @@ export const login = createAsyncThunk('Account/Login', async (user) => {
     },
   };
   const { data: userMovies } = await axios.get('/api/User/GetMovies', config);
+  const {data: friends} = await axios.get('api/User/GetFriends', config);
 
   sessionStorage.setItem('user', JSON.stringify(userData));
   sessionStorage.setItem('favoriteMovies', JSON.stringify(userMovies));
+  sessionStorage.setItem('friends', JSON.stringify(friends));
+
 
   return {
     user: userData,
     movies: userMovies,
+    friends: friends
   };
 });
 
@@ -92,6 +98,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.user = action.payload.user;
       state.favorites = action.payload.movies;
+      state.friends = action.payload.friends;
     },
     [login.rejected]: (state, action) => {
       state.loading = false;

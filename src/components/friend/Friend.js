@@ -7,7 +7,7 @@ function Friend({id, name, onClick}) {
         <div className='friend'>
         <div className='friend__content'>
         <h3 onClick={() => onClick()}>{name}</h3>
-            <CloseIcon cursor='pointer' />
+            <CloseIcon fontSize='large' style={{color: 'red'}} cursor='pointer' />
         </div>
            
             <hr />

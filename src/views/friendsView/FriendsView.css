@@ -5,8 +5,31 @@
 }
 
 .friends__title {
-    text-align: center;
+    font-weight: 400;
+    font-size: 24px;
     color: #e50914;
+    text-align: center;
 }
 
+
+.friends__content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+
+
+}
+
+.friends__list,
+.user__list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px;
+    width: 400px;
+
+}
 
