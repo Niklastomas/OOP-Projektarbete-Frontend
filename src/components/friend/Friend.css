@@ -1,0 +1,23 @@
+.friend {
+    width: 300px;
+    padding: 10px;
+    color: white;
+    transition: 0.3s all;
+}
+
+.friend__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.friend hr {
+    border: none;
+   border-bottom: 3px solid #e50914;
+}
+
+.friend h3:hover {
+    cursor: pointer;
+    color: #e50914;
+    
+}

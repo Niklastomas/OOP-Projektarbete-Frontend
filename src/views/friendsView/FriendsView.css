@@ -1,0 +1,12 @@
+.friends {
+    background-color: #222222;
+    width: 100%;
+    min-height: 100vh; 
+}
+
+.friends__title {
+    text-align: center;
+    color: #e50914;
+}
+
+

@@ -36,6 +36,9 @@ function UserMenu({ name }) {
           open={Boolean(anchor)}
           onClose={handleClose}
         >
+        <MenuItem onClick={() => history.push('/friends')}>
+            Friends
+          </MenuItem>
           <MenuItem onClick={() => history.push('/favorites')}>
             Favorites
           </MenuItem>
