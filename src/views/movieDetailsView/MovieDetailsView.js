@@ -23,7 +23,7 @@ function MovieDetailsView() {
 
   const checkIfFavorite = useCallback(() => {
     setFavorite(false);
-    favorites.forEach((movie) => {
+    favorites?.forEach((movie) => {
       if (movie.id.toString() === id) {
         setFavorite(true);
       }

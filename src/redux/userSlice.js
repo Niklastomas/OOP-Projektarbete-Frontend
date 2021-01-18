@@ -1,51 +1,52 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from '../utils/axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "../utils/axios";
 
-const userFromSessionStorage = JSON.parse(sessionStorage.getItem('user'));
+const userFromSessionStorage = JSON.parse(sessionStorage.getItem("user"));
 const favoriteMoviesFromSessionStorage = JSON.parse(
-  sessionStorage.getItem('favoriteMovies')
+  sessionStorage.getItem("favoriteMovies")
 );
-const friendsFromSessionStorage = JSON.parse(sessionStorage.getItem('friends'));
+const friendsFromSessionStorage = JSON.parse(sessionStorage.getItem("friends"));
 
 const initialState = {
   user: userFromSessionStorage,
-  favorites: favoriteMoviesFromSessionStorage,
-  friends: friendsFromSessionStorage,
+  favorites: favoriteMoviesFromSessionStorage
+    ? favoriteMoviesFromSessionStorage
+    : [],
+  friends: friendsFromSessionStorage ? friendsFromSessionStorage : [],
   loading: false,
   error: null,
 };
 
-export const login = createAsyncThunk('Account/Login', async (user) => {
-  const { data: userData } = await axios.post('/api/Account/Login', user);
+export const login = createAsyncThunk("Account/Login", async (user) => {
+  const { data: userData } = await axios.post("/api/Account/Login", user);
 
   const config = {
     headers: {
       Authorization: `Bearer ${userData.token}`,
     },
   };
-  const { data: userMovies } = await axios.get('/api/User/GetMovies', config);
-  const {data: friends} = await axios.get('api/User/GetFriends', config);
+  const { data: userMovies } = await axios.get("/api/User/GetMovies", config);
+  const { data: friends } = await axios.get("api/User/GetFriends", config);
 
-  sessionStorage.setItem('user', JSON.stringify(userData));
-  sessionStorage.setItem('favoriteMovies', JSON.stringify(userMovies));
-  sessionStorage.setItem('friends', JSON.stringify(friends));
-
+  sessionStorage.setItem("user", JSON.stringify(userData));
+  sessionStorage.setItem("favoriteMovies", JSON.stringify(userMovies));
+  sessionStorage.setItem("friends", JSON.stringify(friends));
 
   return {
     user: userData,
     movies: userMovies,
-    friends: friends
+    friends: friends,
   };
 });
 
-export const register = createAsyncThunk('Account/Create', async (user) => {
-  const { data } = await axios.post('/api/Account/Create', user);
-  sessionStorage.setItem('user', JSON.stringify(data));
+export const register = createAsyncThunk("Account/Create", async (user) => {
+  const { data } = await axios.post("/api/Account/Create", user);
+  sessionStorage.setItem("user", JSON.stringify(data));
   return data;
 });
 
 export const deleteUserMovie = createAsyncThunk(
-  'User/Movies/Delete',
+  "User/Movies/Delete",
   async (info) => {
     const config = {
       headers: {
@@ -61,7 +62,7 @@ export const deleteUserMovie = createAsyncThunk(
 );
 
 export const addUserMovie = createAsyncThunk(
-  'User/Movies/Add',
+  "User/Movies/Add",
   async (info) => {
     const config = {
       headers: {
@@ -77,14 +78,43 @@ export const addUserMovie = createAsyncThunk(
   }
 );
 
+export const getFriends = createAsyncThunk("User/GetFriends", async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const { data } = await axios.get(`/api/User/GetFriends`, config);
+  return data;
+});
+
+export const AcceptFriendRequest = createAsyncThunk(
+  "User/AcceptFriendRequest",
+  async (info) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${info.user.token}`,
+      },
+    };
+    const { data } = await axios.post(
+      `/api/User/AcceptFriendRequest/${info.id}`,
+      {},
+      config
+    );
+    return data;
+  }
+);
+
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState: initialState,
   reducers: {
     signOut: (state) => {
       state.user = null;
-      sessionStorage.removeItem('user');
-      sessionStorage.removeItem('favoriteMovies');
+      state.loading = false;
+      sessionStorage.removeItem("friends");
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("favoriteMovies");
     },
     removeErrorMessage: (state) => {
       state.error = null;
@@ -102,7 +132,7 @@ const userSlice = createSlice({
     },
     [login.rejected]: (state, action) => {
       state.loading = false;
-      state.error = 'Wrong username or password';
+      state.error = "Wrong username or password";
     },
     [register.pending]: (state, action) => {
       state.loading = true;
@@ -113,7 +143,7 @@ const userSlice = createSlice({
     },
     [register.rejected]: (state, action) => {
       state.loading = false;
-      state.error = 'Invalid username or password';
+      state.error = "Invalid username or password";
     },
     [addUserMovie.pending]: (state, action) => {
       state.loading = true;
@@ -121,7 +151,7 @@ const userSlice = createSlice({
     [addUserMovie.fulfilled]: (state, action) => {
       state.loading = false;
       state.favorites = state.favorites.concat(action.payload);
-      sessionStorage.setItem('favoriteMovies', JSON.stringify(state.favorites));
+      sessionStorage.setItem("favoriteMovies", JSON.stringify(state.favorites));
     },
     [deleteUserMovie.pending]: (state, action) => {
       state.loading = true;
@@ -132,7 +162,11 @@ const userSlice = createSlice({
       state.favorites = state.favorites.filter(
         (movie) => movie.id !== action.payload
       );
-      sessionStorage.setItem('favoriteMovies', JSON.stringify(state.favorites));
+      sessionStorage.setItem("favoriteMovies", JSON.stringify(state.favorites));
+    },
+    [getFriends.fulfilled]: (state, action) => {
+      state.friends = action.payload;
+      sessionStorage.setItem("friends", JSON.stringify(action.payload));
     },
   },
 });

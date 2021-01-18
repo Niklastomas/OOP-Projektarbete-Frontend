@@ -1,10 +1,10 @@
-import { Avatar, Menu, MenuItem, Paper } from '@material-ui/core';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { signOut } from '../../../redux/userSlice';
-import './UserMenu.css';
+import { Avatar, Menu, MenuItem, Paper } from "@material-ui/core";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { signOut } from "../../../redux/userSlice";
+import "./UserMenu.css";
 
 function UserMenu({ name }) {
   const [anchor, setAnchor] = useState(null);
@@ -24,10 +24,10 @@ function UserMenu({ name }) {
     setAnchor(null);
   };
   return (
-    <div className='userMenu'>
-      <div className='userMenu__icons' onClick={handleClick}>
-        <Avatar style={{ backgroundColor: '#E50914' }}>{name}</Avatar>
-        <ArrowDropDownIcon fontSize='large' style={{ color: '#E50914' }} />
+    <div className="userMenu">
+      <div className="userMenu__icons" onClick={handleClick}>
+        <Avatar style={{ backgroundColor: "#E50914" }}>{name}</Avatar>
+        <ArrowDropDownIcon fontSize="large" style={{ color: "#E50914" }} />
       </div>
       <Paper>
         <Menu
@@ -36,10 +36,8 @@ function UserMenu({ name }) {
           open={Boolean(anchor)}
           onClose={handleClose}
         >
-        <MenuItem onClick={() => history.push('/friends')}>
-            Friends
-          </MenuItem>
-          <MenuItem onClick={() => history.push('/favorites')}>
+          <MenuItem onClick={() => history.push("/friends")}>Friends</MenuItem>
+          <MenuItem onClick={() => history.push("/favorites")}>
             Favorites
           </MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>

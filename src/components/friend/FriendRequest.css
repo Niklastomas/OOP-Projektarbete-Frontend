@@ -1,4 +1,7 @@
-.friend {
+.friendRequest {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 300px;
   color: white;
   transition: 0.3s all;
@@ -8,17 +11,18 @@
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-.friend h3 {
+.friendRequest h3 {
   font-weight: 200;
 }
 
-.friend__content {
+.friendRequest__container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
-.friend h3:hover {
+.friendRequest h3:hover {
   cursor: pointer;
   color: #e50914;
 }

@@ -1,23 +1,24 @@
 .user {
-    width: 300px;
-    padding: 10px;
-    color: white;
-    transition: 0.3s all;
+  width: 300px;
+  padding: 10px;
+  color: white;
+  transition: 0.3s all;
+  background-color: rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
+  border-radius: 10px;
 }
 
 .user__content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.user hr {
-    border: none;
-   border-bottom: 3px solid #e50914;
+.user h3 {
+  font-weight: 200;
 }
 
 .user h3:hover {
-    cursor: pointer;
-    color: #e50914;
-    
+  cursor: pointer;
+  color: #e50914;
 }
