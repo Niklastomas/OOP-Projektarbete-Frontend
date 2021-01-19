@@ -1,25 +1,29 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Header from '../../components/header/Header';
-import axios from '../../utils/axios';
-import DescriptionIcon from '@material-ui/icons/Description';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import React, { useCallback, useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import Header from "../../components/header/Header";
+import axios from "../../utils/axios";
+import DescriptionIcon from "@material-ui/icons/Description";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import ShareIcon from "@material-ui/icons/Share";
 
-import './MovieDetailsView.css';
-import Loader from '../../components/loader/Loader';
-import { Button, Grow } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { addUserMovie, deleteUserMovie } from '../../redux/userSlice';
+import "./MovieDetailsView.css";
+import Loader from "../../components/loader/Loader";
+import { Button, Grow } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { addUserMovie, deleteUserMovie } from "../../redux/userSlice";
+import ShareModal from "../../components/modals/ShareModal";
 
 function MovieDetailsView() {
   const { id } = useParams();
   const [movieInfo, setMovieInfo] = useState({});
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [favorite, setFavorite] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const { user, favorites } = useSelector((state) => state.user);
+  const history = useHistory();
 
   const checkIfFavorite = useCallback(() => {
     setFavorite(false);
@@ -48,8 +52,16 @@ function MovieDetailsView() {
     );
   };
 
+  const handleShare = ({ friend, message }) => {
+    const shareInfo = {
+      movieId: id,
+      sendTo: friend,
+      message,
+    };
+    console.log(shareInfo);
+  };
+
   useEffect(() => {
-    console.log('useeffect');
     const getMovie = async () => {
       setLoading(true);
       try {
@@ -57,7 +69,7 @@ function MovieDetailsView() {
         setMovieInfo(data);
       } catch (error) {
         console.error(error.message);
-        setError('No Record Found');
+        setError("No Record Found");
       }
       setLoading(false);
     };
@@ -71,46 +83,53 @@ function MovieDetailsView() {
   }, [user, checkIfFavorite]);
 
   return (
-    <div className='movieDetail'>
+    <div className="movieDetail">
       <Header />
+      {showModal && (
+        <ShareModal
+          close={() => setShowModal(!showModal)}
+          onSubmit={handleShare}
+        />
+      )}
       {loading && <Loader />}
       {error && <h1>{error}</h1>}
       {movieInfo.movie && (
-        <div className='movieDetail__container'>
+        <div className="movieDetail__container">
           <Grow in={true} timeout={500}>
             <h1>{movieInfo.movie.title}</h1>
           </Grow>
 
-          <div className='movieDetail__row'>
+          <div className="movieDetail__row">
             <Grow in={true} timeout={1000}>
-              <div className='movieDetail__poster'>
+              <div className="movieDetail__poster">
                 {movieInfo.movie.poster_path ? (
                   <a href={movieInfo.movie.homepage}>
                     <img
+                      onClick={() => history.push(movieInfo.movie.homepage)}
                       src={`https://image.tmdb.org/t/p/w500${movieInfo.movie.poster_path}`}
-                      alt='Poster'
+                      alt="Poster"
                     />
                   </a>
                 ) : (
-                  <div className='movieDetail__posterNotFound'>
+                  <div className="movieDetail__posterNotFound">
                     <h3>{movieInfo.movie.title}</h3>
                   </div>
                 )}
                 {user && (
-                  <div className='movieDetail__favorite'>
+                  <div className="movieDetail__favorite">
                     {favorite ? (
                       <>
                         <FavoriteIcon
-                          style={{ color: '#e50914', marginRight: '10px' }}
-                          fontSize='large'
+                          style={{ color: "#e50914", marginRight: "10px" }}
+                          fontSize="large"
                         />
                         <Button
                           disabled={loading ? true : false}
                           onClick={handleRemoveFavorite}
-                          color='inherit'
+                          color="inherit"
                           style={{
-                            flex: '1',
-                            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                            flex: "1",
+                            backgroundColor: "rgba(0, 0, 0, 0.3)",
                           }}
                         >
                           Remove from Favorites
@@ -119,16 +138,16 @@ function MovieDetailsView() {
                     ) : (
                       <>
                         <FavoriteBorderIcon
-                          style={{ color: '#e50914', marginRight: '10px' }}
-                          fontSize='large'
+                          style={{ color: "#e50914", marginRight: "10px" }}
+                          fontSize="large"
                         />
                         <Button
                           disabled={loading ? true : false}
                           onClick={handleAddFavorite}
-                          color='inherit'
+                          color="inherit"
                           style={{
-                            flex: '1',
-                            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                            flex: "1",
+                            backgroundColor: "rgba(0, 0, 0, 0.3)",
                           }}
                         >
                           Add to favorites
@@ -140,25 +159,26 @@ function MovieDetailsView() {
               </div>
             </Grow>
 
-            <div className='movieDetail__trailer'>
+            <div className="movieDetail__trailer">
               <Grow in={true} timeout={2500}>
                 {movieInfo.trailer.results[0] ? (
                   <iframe
-                    title='player'
-                    className='player'
-                    type='text/html'
+                    title="player"
+                    className="player"
+                    type="text/html"
                     src={`http://www.youtube.com/embed/${movieInfo.trailer.results[0].key}`}
-                    frameBorder='0'
+                    frameBorder="0"
                     allowFullScreen
                   ></iframe>
                 ) : (
-                  <div className='movieDetail__trailerNotFound'>
+                  <div className="movieDetail__trailerNotFound">
                     <h3>No Trailer was found for this movie</h3>
                   </div>
                 )}
               </Grow>
-              <div className='movieDetail__info'>
-                <p>
+              <Grow in={true} timeout={2500}>
+                <div className="movieDetail__share">
+                  {/* <p>
                   Release: <strong>{movieInfo.movie.release_date}</strong>
                 </p>
                 <p>
@@ -171,14 +191,28 @@ function MovieDetailsView() {
                   <p>
                     Budget: <strong>${movieInfo.movie.budget}</strong>
                   </p>
-                )}
-              </div>
+                )} */}
+
+                  <ShareIcon fontSize="large" style={{ marginRight: "10px" }} />
+                  <Button
+                    disabled={loading ? true : false}
+                    onClick={() => setShowModal(!showModal)}
+                    color="inherit"
+                    style={{
+                      flex: "1",
+                      backgroundColor: "rgba(0, 0, 0, 0.3)",
+                    }}
+                  >
+                    Share with a friend
+                  </Button>
+                </div>
+              </Grow>
             </div>
           </div>
-          <div className='movieDetail__row'>
+          <div className="movieDetail__row">
             <Grow in={true} timeout={2000}>
               <div>
-                <div className='movieDetail__title'>
+                <div className="movieDetail__title">
                   <DescriptionIcon />
                   <h3>Overview</h3>
                 </div>

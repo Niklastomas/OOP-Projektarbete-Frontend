@@ -9,11 +9,7 @@ function FriendList({ friends }) {
     <div className="friendList">
       {friends &&
         friends.map((friend) => (
-          <Friend
-            onClick={() => console.log(friend.id)}
-            key={friend.id}
-            name={friend.username}
-          />
+          <Friend key={friend.id} name={friend.username} />
         ))}
     </div>
   );

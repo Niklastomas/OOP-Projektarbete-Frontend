@@ -30,17 +30,30 @@
 .movieDetail__trailer {
   display: flex;
   flex-direction: column;
+  height: 445px;
+  margin: 10px;
 }
 
-.movieDetail__info {
+.movieDetail__poster a {
+  height: 390px;
+}
+
+.movieDetail__share {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .movieDetail__info {
   display: flex;
   justify-content: space-between;
-}
+} */
 
 .movieDetail__row img {
   object-fit: contain;
   height: 390px;
-  margin: 10px;
+  /* margin: 10px; */
 }
 
 .movieDetail__title {
@@ -60,7 +73,6 @@
 }
 
 .player {
-  margin: 10px;
   width: 640px;
   height: 390px;
 }
@@ -88,8 +100,9 @@
 
 .movieDetail__favorite {
   display: flex;
-  margin: 0 10px;
+  margin: 10px 0;
   justify-content: center;
+  align-items: center;
 }
 
 @media screen and (max-width: 600px) {
