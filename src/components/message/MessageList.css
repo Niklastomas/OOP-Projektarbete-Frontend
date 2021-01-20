@@ -1,0 +1,31 @@
+.messageList {
+  background-color: whitesmoke;
+  width: 300px;
+  height: 70vh;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.message__notRead {
+  display: flex;
+  flex-direction: column;
+  padding: 7px;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  margin: 10px;
+}
+
+.message__read {
+  display: flex;
+  flex-direction: column;
+  padding: 7px;
+  border-radius: 10px;
+  color: gray;
+  margin: 10px;
+}
+
+.message__notRead:hover,
+.message__read:hover {
+  cursor: pointer;
+  filter: brightness(1.1);
+}

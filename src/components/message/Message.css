@@ -1,0 +1,11 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 15px;
+  width: 600px;
+  height: fit-content;
+  background-color: whitesmoke;
+  margin: 10px;
+}

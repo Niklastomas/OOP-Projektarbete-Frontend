@@ -8,6 +8,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import PersonIcon from "@material-ui/icons/Person";
 import Typography from "@material-ui/core/Typography";
+import EmailIcon from "@material-ui/icons/Email";
 import Box from "@material-ui/core/Box";
 import Header from "../../components/header/Header";
 import FriendList from "../../components/friend/FriendList";
@@ -17,6 +18,7 @@ import UserList from "../../components/user/UserList";
 import FriendRequestList from "../../components/friend/FriendRequestList";
 import { getFriends } from "../../redux/userSlice";
 import { Badge } from "@material-ui/core";
+import Inbox from "../../components/message/Inbox";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,6 +68,7 @@ export default function FriendsView() {
   const [value, setValue] = useState(0);
   const [users, setUsers] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   const { user, friends } = useSelector((state) => state.user);
 
@@ -77,10 +80,10 @@ export default function FriendsView() {
     };
     const fetchData = async () => {
       try {
-        // const { data: friendsData } = await axios.get(
-        //   "api/User/GetFriends",
-        //   config
-        // );
+        const { data: messageData } = await axios.get(
+          "api/User/GetMessages",
+          config
+        );
         const { data: usersData } = await axios.get(
           "api/User/GetUsers",
           config
@@ -89,8 +92,7 @@ export default function FriendsView() {
           "api/User/GetFriendRequests",
           config
         );
-        console.log(friendRequestsData);
-        // setFriends(friendsData);
+        setMessages(messageData);
         dispatch(getFriends(user.token));
         setUsers(usersData);
         setFriendRequests(friendRequestsData);
@@ -131,6 +133,20 @@ export default function FriendsView() {
             }
             {...a11yProps(2)}
           />
+          <Tab
+            label="Inbox"
+            icon={
+              <Badge
+                badgeContent={
+                  messages.filter((message) => !message.read).length
+                }
+                color="secondary"
+              >
+                <EmailIcon />
+              </Badge>
+            }
+            {...a11yProps(3)}
+          />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -141,6 +157,9 @@ export default function FriendsView() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <FriendRequestList friendRequests={friendRequests} />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <Inbox messages={messages} />
       </TabPanel>
     </div>
   );

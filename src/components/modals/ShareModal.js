@@ -31,6 +31,8 @@ function ShareModal({ onSubmit, close }) {
       friend,
       message,
     });
+    // setFriend("");
+    // setMessage("");
   };
   return (
     <div className="shareModal">

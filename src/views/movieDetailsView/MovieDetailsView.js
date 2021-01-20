@@ -52,13 +52,23 @@ function MovieDetailsView() {
     );
   };
 
-  const handleShare = ({ friend, message }) => {
-    const shareInfo = {
-      movieId: id,
-      sendTo: friend,
-      message,
+  const handleShare = async ({ friend, message }) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
     };
-    console.log(shareInfo);
+
+    await axios.post(
+      "api/User/SendMessage",
+      {
+        sendTo: friend,
+        movieId: id,
+        message: message,
+      },
+      config
+    );
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -176,9 +186,10 @@ function MovieDetailsView() {
                   </div>
                 )}
               </Grow>
-              <Grow in={true} timeout={2500}>
-                <div className="movieDetail__share">
-                  {/* <p>
+              {user && (
+                <Grow in={true} timeout={2500}>
+                  <div className="movieDetail__share">
+                    {/* <p>
                   Release: <strong>{movieInfo.movie.release_date}</strong>
                 </p>
                 <p>
@@ -193,20 +204,24 @@ function MovieDetailsView() {
                   </p>
                 )} */}
 
-                  <ShareIcon fontSize="large" style={{ marginRight: "10px" }} />
-                  <Button
-                    disabled={loading ? true : false}
-                    onClick={() => setShowModal(!showModal)}
-                    color="inherit"
-                    style={{
-                      flex: "1",
-                      backgroundColor: "rgba(0, 0, 0, 0.3)",
-                    }}
-                  >
-                    Share with a friend
-                  </Button>
-                </div>
-              </Grow>
+                    <ShareIcon
+                      fontSize="large"
+                      style={{ marginRight: "10px" }}
+                    />
+                    <Button
+                      disabled={loading ? true : false}
+                      onClick={() => setShowModal(!showModal)}
+                      color="inherit"
+                      style={{
+                        flex: "1",
+                        backgroundColor: "rgba(0, 0, 0, 0.3)",
+                      }}
+                    >
+                      Share with a friend
+                    </Button>
+                  </div>
+                </Grow>
+              )}
             </div>
           </div>
           <div className="movieDetail__row">
