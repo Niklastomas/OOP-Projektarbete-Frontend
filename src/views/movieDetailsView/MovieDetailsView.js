@@ -11,8 +11,10 @@ import "./MovieDetailsView.css";
 import Loader from "../../components/loader/Loader";
 import { Button, Grow } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { addUserMovie, deleteUserMovie } from "../../redux/userSlice";
 import ShareModal from "../../components/modals/ShareModal";
+import { addMovie, deleteMovie, getMovies } from "../../redux/movieSlice";
+import { sendMessage } from "../../redux/messageSlice";
+import { getFriends } from "../../redux/friendSlice";
 
 function MovieDetailsView() {
   const { id } = useParams();
@@ -22,51 +24,50 @@ function MovieDetailsView() {
   const [favorite, setFavorite] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
-  const { user, favorites } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
+  const { movies } = useSelector((state) => state.movie);
+
   const history = useHistory();
 
   const checkIfFavorite = useCallback(() => {
     setFavorite(false);
-    favorites?.forEach((movie) => {
+    movies?.forEach((movie) => {
       if (movie.id.toString() === id) {
         setFavorite(true);
       }
     });
-  }, [favorites, id]);
+  }, [movies, id]);
 
   const handleAddFavorite = () => {
-    dispatch(
-      addUserMovie({
-        user: user,
-        movieId: id,
-      })
-    );
+    dispatch(addMovie(id));
   };
 
   const handleRemoveFavorite = () => {
-    dispatch(
-      deleteUserMovie({
-        user: user,
-        movieId: id,
-      })
-    );
+    dispatch(deleteMovie(id));
   };
 
   const handleShare = async ({ friend, message }) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
+    // const config = {
+    //   headers: {
+    //     Authorization: `Bearer ${user.token}`,
+    //   },
+    // };
 
-    await axios.post(
-      "api/User/SendMessage",
-      {
+    // await axios.post(
+    //   "api/User/SendMessage",
+    //   {
+    //     sendTo: friend,
+    //     movieId: id,
+    //     message: message,
+    //   },
+    //   config
+    // );
+    dispatch(
+      sendMessage({
         sendTo: friend,
         movieId: id,
         message: message,
-      },
-      config
+      })
     );
     setShowModal(false);
   };
@@ -83,6 +84,8 @@ function MovieDetailsView() {
       }
       setLoading(false);
     };
+    dispatch(getMovies());
+    dispatch(getFriends());
     getMovie();
   }, [id, dispatch]);
 
@@ -210,7 +213,7 @@ function MovieDetailsView() {
                     />
                     <Button
                       disabled={loading ? true : false}
-                      onClick={() => setShowModal(!showModal)}
+                      onClick={() => setShowModal(true)}
                       color="inherit"
                       style={{
                         flex: "1",

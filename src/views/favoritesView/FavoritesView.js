@@ -1,16 +1,23 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import Header from '../../components/header/Header';
-import MovieList from '../../components/movie/MovieList';
-import './FavoritesView.css';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Header from "../../components/header/Header";
+import MovieList from "../../components/movie/MovieList";
+import { getMovies } from "../../redux/movieSlice";
+import "./FavoritesView.css";
 
 function FavoritesView() {
-  const { favorites } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { movies } = useSelector((state) => state.movie);
+
+  useEffect(() => {
+    dispatch(getMovies());
+  }, [dispatch]);
+
   return (
-    <div className='favorites'>
+    <div className="favorites">
       <Header />
-      <div className='favorites__content'>
-        <MovieList movies={favorites} pagination={false} />
+      <div className="favorites__content">
+        <MovieList movies={movies} pagination={false} />
       </div>
     </div>
   );

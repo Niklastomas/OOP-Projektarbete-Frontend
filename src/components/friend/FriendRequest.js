@@ -5,19 +5,13 @@ import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 import axios from "../../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
-import { AcceptFriendRequest } from "../../redux/userSlice";
+import { acceptFriendRequest } from "../../redux/friendSlice";
+// import { AcceptFriendRequest } from "../../redux/userSlice";
 
 function FriendRequest({ id, sentBy, time }) {
-  const { user } = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
   const handleAccept = async () => {
-    dispatch(
-      AcceptFriendRequest({
-        user,
-        id,
-      })
-    );
+    dispatch(acceptFriendRequest(id));
   };
 
   return (

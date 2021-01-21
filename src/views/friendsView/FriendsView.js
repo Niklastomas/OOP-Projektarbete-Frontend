@@ -12,13 +12,18 @@ import EmailIcon from "@material-ui/icons/Email";
 import Box from "@material-ui/core/Box";
 import Header from "../../components/header/Header";
 import FriendList from "../../components/friend/FriendList";
-import axios from "../../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
 import UserList from "../../components/user/UserList";
 import FriendRequestList from "../../components/friend/FriendRequestList";
-import { getFriends } from "../../redux/userSlice";
 import { Badge } from "@material-ui/core";
 import Inbox from "../../components/message/Inbox";
+import {
+  getFriendRequests,
+  getFriends,
+  getUsers,
+} from "../../redux/friendSlice";
+import Loader from "../../components/loader/Loader";
+import { getMessages } from "../../redux/messageSlice";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -31,11 +36,7 @@ function TabPanel(props) {
       aria-labelledby={`scrollable-force-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box p={3}>{children}</Box>}
     </div>
   );
 }
@@ -66,42 +67,17 @@ export default function FriendsView() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
-  const [users, setUsers] = useState([]);
-  const [friendRequests, setFriendRequests] = useState([]);
-  const [messages, setMessages] = useState([]);
-
-  const { user, friends } = useSelector((state) => state.user);
+  const { friends, users, friendRequests, status } = useSelector(
+    (state) => state.friend
+  );
+  const { messages } = useSelector((state) => state.message);
 
   useEffect(() => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const fetchData = async () => {
-      try {
-        const { data: messageData } = await axios.get(
-          "api/User/GetMessages",
-          config
-        );
-        const { data: usersData } = await axios.get(
-          "api/User/GetUsers",
-          config
-        );
-        const { data: friendRequestsData } = await axios.get(
-          "api/User/GetFriendRequests",
-          config
-        );
-        setMessages(messageData);
-        dispatch(getFriends(user.token));
-        setUsers(usersData);
-        setFriendRequests(friendRequestsData);
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-    fetchData();
-  }, [user.token, dispatch, user]);
+    dispatch(getFriends());
+    dispatch(getUsers());
+    dispatch(getFriendRequests());
+    dispatch(getMessages());
+  }, [dispatch]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -110,6 +86,7 @@ export default function FriendsView() {
   return (
     <div className={classes.root}>
       <Header />
+      {status === "loading" && <Loader />}
       <AppBar
         style={{ backgroundColor: "#222222", borderColor: "red" }}
         position="static"
@@ -138,7 +115,7 @@ export default function FriendsView() {
             icon={
               <Badge
                 badgeContent={
-                  messages.filter((message) => !message.read).length
+                  messages?.filter((message) => !message.read).length
                 }
                 color="secondary"
               >

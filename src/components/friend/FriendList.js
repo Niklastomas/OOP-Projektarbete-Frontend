@@ -3,6 +3,7 @@ import Friend from "./Friend";
 import axios from "../../utils/axios";
 import "./FriendList.css";
 import { useSelector } from "react-redux";
+import Loader from "../loader/Loader";
 
 function FriendList({ friends }) {
   return (

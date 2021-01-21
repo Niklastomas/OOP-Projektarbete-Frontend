@@ -6,21 +6,22 @@ import "./Message.css";
 
 function Message({ message }) {
   const history = useHistory();
+
   return (
-    <div className="message">
+    <>
       {message && (
-        <>
+        <div className="message">
           <h3>From: {message.from}</h3>
           <small>
             Sent <TimeAgo date={new Date(message.sent).toUTCString()} />
           </small>
           <hr />
-          {message.message && (
-            <>
-              <h3>Message</h3>
-              <p>{message.message}</p>
-            </>
-          )}
+
+          <>
+            <h3>Message</h3>
+            <p>{message.message}</p>
+          </>
+
           <Button
             style={{ margin: "10px 0" }}
             onClick={() => history.push(`/movie/${message.movieId}`)}
@@ -28,9 +29,9 @@ function Message({ message }) {
           >
             Check out movie
           </Button>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

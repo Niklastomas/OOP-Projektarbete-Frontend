@@ -1,28 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import "./UserList.css";
 import User from "./User";
-import { useSelector } from "react-redux";
-import axios from "../../utils/axios";
+import { useDispatch, useSelector } from "react-redux";
+import SuccessAlert from "../alerts/SuccessAlert";
+import { sendFriendRequest } from "../../redux/friendSlice";
+import ErrorAlert from "../alerts/ErrorAlert";
 
 function UserList({ users, friends }) {
-  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { status, error } = useSelector((state) => state.friend);
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleAddFriend = async (id) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    try {
-      await axios.post(`api/User/SendFriendRequest/${id}`, {}, config);
-      console.log("Successfully sent friend request");
-    } catch (error) {
-      console.log(error.message);
-    }
+    setShowAlert(true);
+    dispatch(sendFriendRequest(id));
   };
 
   return (
     <div className="userList">
+      {status === "succeeded" && showAlert && (
+        <SuccessAlert open={showAlert} onClose={() => setShowAlert(!showAlert)}>
+          Successfully sent friend request
+        </SuccessAlert>
+      )}
+      {status === "failed" && showAlert && (
+        <ErrorAlert open={showAlert} onClose={() => setShowAlert(!showAlert)}>
+          {error}
+        </ErrorAlert>
+      )}
+
       {users ? (
         users.map((user) => (
           <User

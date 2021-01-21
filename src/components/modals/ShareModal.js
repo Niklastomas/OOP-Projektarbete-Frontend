@@ -11,9 +11,9 @@ import { useSelector } from "react-redux";
 import "./ShareModal.css";
 
 function ShareModal({ onSubmit, close }) {
-  const { friends } = useSelector((state) => state.user);
+  const { friends } = useSelector((state) => state.friend);
   const [friend, setFriend] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("Check out this movie!");
 
   const handleSelectChange = (e) => {
     setFriend(e.target.value);
@@ -31,8 +31,6 @@ function ShareModal({ onSubmit, close }) {
       friend,
       message,
     });
-    // setFriend("");
-    // setMessage("");
   };
   return (
     <div className="shareModal">
@@ -40,7 +38,7 @@ function ShareModal({ onSubmit, close }) {
         <span onClick={() => close()} className="close">
           &times;
         </span>
-        {friends && (
+        {friends ? (
           <form className="sharedModal__form" onSubmit={handleSubmit}>
             <InputLabel id="friend">Friend</InputLabel>
             <Select
@@ -75,6 +73,8 @@ function ShareModal({ onSubmit, close }) {
               Send
             </Button>
           </form>
+        ) : (
+          <h3>Add some friends to share movies</h3>
         )}
       </div>
     </div>
