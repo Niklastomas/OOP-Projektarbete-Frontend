@@ -29,7 +29,7 @@ function UserList({ users, friends }) {
         </ErrorAlert>
       )}
 
-      {users ? (
+      {users.length > 0 ? (
         users.map((user) => (
           <User
             friends={friends}
@@ -40,7 +40,7 @@ function UserList({ users, friends }) {
           />
         ))
       ) : (
-        <h3>No users was found</h3>
+        <h3 style={{ color: "white" }}>No users was found</h3>
       )}
     </div>
   );

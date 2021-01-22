@@ -9,8 +9,15 @@ export const getMessages = createAsyncThunk("Messages/Get", async () => {
 export const sendMessage = createAsyncThunk(
   "Messages/Post",
   async ({ sendTo, movieId, message }) => {
-    console.log(message);
     await axios.post(`/api/User/SendMessage`, { sendTo, movieId, message });
+  }
+);
+
+export const markMessageAsRead = createAsyncThunk(
+  "Messages/MarkAsRead",
+  async (id) => {
+    await axios.post(`/api/User/MarkMessageAsRead/${id}`);
+    return id;
   }
 );
 
@@ -43,6 +50,21 @@ const messageSlice = createSlice({
       state.status = "succeeded";
     },
     [sendMessage.rejected]: (state, action) => {
+      state.status = "failed";
+      state.messages = action.error.message;
+    },
+    [markMessageAsRead.pending]: (state) => {
+      state.status = "loading";
+    },
+    [markMessageAsRead.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.messages.forEach((message) => {
+        if (message.id === action.payload) {
+          message.read = true;
+        }
+      });
+    },
+    [markMessageAsRead.rejected]: (state, action) => {
       state.status = "failed";
       state.messages = action.error.message;
     },

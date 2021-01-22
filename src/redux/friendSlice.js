@@ -31,9 +31,17 @@ export const acceptFriendRequest = createAsyncThunk(
   async (id) => {
     const { data } = await axios.post(`api/User/AcceptFriendRequest/${id}`);
     return {
-      id,
+      id: id,
       user: data,
     };
+  }
+);
+
+export const declineFriendRequest = createAsyncThunk(
+  "User/DeclineFriendRequest",
+  async (id) => {
+    await axios.post(`api/User/DeclineFriendRequest/${id}`);
+    return id;
   }
 );
 
@@ -80,9 +88,23 @@ const friendSlice = createSlice({
       state.friendRequests = state.friendRequests.filter(
         (request) => request.id !== action.payload.id
       );
+      console.log(action.payload.user);
       state.friends.push(action.payload.user);
     },
     [acceptFriendRequest.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+    [declineFriendRequest.pending]: (state) => {
+      state.status = "loading";
+    },
+    [declineFriendRequest.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.friendRequests = state.friendRequests.filter(
+        (request) => request.id !== action.payload
+      );
+    },
+    [declineFriendRequest.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
     },
@@ -100,9 +122,10 @@ const friendSlice = createSlice({
       state.status = "loading";
     },
     [getUsers.fulfilled]: (state, action) => {
-      const friendsIDs = new Set(state.friends.map(({ id }) => id));
+      // const friendsIDs = new Set(state.friends.map(({ id }) => id));
       state.status = "succeeded";
-      state.users = action.payload.filter(({ id }) => !friendsIDs.has(id));
+      // state.users = action.payload.filter(({ id }) => !friendsIDs.has(id));
+      state.users = action.payload;
     },
     [getUsers.rejected]: (state, action) => {
       state.status = "failed";

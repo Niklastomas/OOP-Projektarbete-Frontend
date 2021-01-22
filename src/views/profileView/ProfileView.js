@@ -7,7 +7,6 @@ import Tab from "@material-ui/core/Tab";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import PersonIcon from "@material-ui/icons/Person";
-import Typography from "@material-ui/core/Typography";
 import EmailIcon from "@material-ui/icons/Email";
 import Box from "@material-ui/core/Box";
 import Header from "../../components/header/Header";
@@ -58,12 +57,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: "100%",
-    height: "100vh",
+    minHeight: "100vh",
     backgroundColor: "#222222",
   },
 }));
 
-export default function FriendsView() {
+export default function ProfileView() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);

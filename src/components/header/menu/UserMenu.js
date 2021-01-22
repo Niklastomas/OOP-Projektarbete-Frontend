@@ -2,7 +2,7 @@ import { Avatar, Menu, MenuItem, Paper } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { signOut } from "../../../redux/userSlice";
 import "./UserMenu.css";
 
@@ -36,7 +36,7 @@ function UserMenu({ name }) {
           open={Boolean(anchor)}
           onClose={handleClose}
         >
-          <MenuItem onClick={() => history.push("/friends")}>Friends</MenuItem>
+          <MenuItem onClick={() => history.push("/profile")}>Profile</MenuItem>
           <MenuItem onClick={() => history.push("/favorites")}>
             Favorites
           </MenuItem>

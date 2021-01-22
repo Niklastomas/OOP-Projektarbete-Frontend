@@ -1,17 +1,14 @@
 import {
   Button,
-  FormControl,
   InputLabel,
   MenuItem,
   Select,
   TextField,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import "./ShareModal.css";
 
-function ShareModal({ onSubmit, close }) {
-  const { friends } = useSelector((state) => state.friend);
+function ShareModal({ onSubmit, close, friends }) {
   const [friend, setFriend] = useState("");
   const [message, setMessage] = useState("Check out this movie!");
 
@@ -74,7 +71,9 @@ function ShareModal({ onSubmit, close }) {
             </Button>
           </form>
         ) : (
-          <h3>Add some friends to share movies</h3>
+          <h3 style={{ color: "black", padding: "40px" }}>
+            Add some friends to share movies
+          </h3>
         )}
       </div>
     </div>

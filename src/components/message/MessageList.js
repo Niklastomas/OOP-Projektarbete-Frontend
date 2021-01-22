@@ -5,7 +5,9 @@ import "./MessageList.css";
 function MessageList({ messages, onClick }) {
   return (
     <div className="messageList">
-      {messages.length === 0 && <h3>Inbox is empty</h3>}
+      {messages.length === 0 && (
+        <h3 style={{ textAlign: "center" }}>Inbox is empty</h3>
+      )}
       {messages &&
         messages.map((message) => (
           <div

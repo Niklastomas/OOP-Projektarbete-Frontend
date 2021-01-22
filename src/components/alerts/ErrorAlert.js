@@ -5,7 +5,7 @@ import React from "react";
 function ErrorAlert({ children, open, onClose }) {
   return (
     <Snackbar
-      anchorOrigin={{ vertical: "center", horizontal: "center" }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       open={open}
       autoHideDuration={6000}
       onClose={() => onClose()}

@@ -22,6 +22,11 @@
   align-items: center;
 }
 
+.friendRequest__button:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
 .friendRequest h3:hover {
   cursor: pointer;
   color: #e50914;

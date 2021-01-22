@@ -15,6 +15,7 @@ import ShareModal from "../../components/modals/ShareModal";
 import { addMovie, deleteMovie, getMovies } from "../../redux/movieSlice";
 import { sendMessage } from "../../redux/messageSlice";
 import { getFriends } from "../../redux/friendSlice";
+import MovieTable from "../../components/table/MovieTable";
 
 function MovieDetailsView() {
   const { id } = useParams();
@@ -25,7 +26,10 @@ function MovieDetailsView() {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { movies } = useSelector((state) => state.movie);
+  const { movies, status: movieStatus } = useSelector((state) => state.movie);
+  const { friends, status: friendStatus } = useSelector(
+    (state) => state.friend
+  );
 
   const history = useHistory();
 
@@ -47,21 +51,6 @@ function MovieDetailsView() {
   };
 
   const handleShare = async ({ friend, message }) => {
-    // const config = {
-    //   headers: {
-    //     Authorization: `Bearer ${user.token}`,
-    //   },
-    // };
-
-    // await axios.post(
-    //   "api/User/SendMessage",
-    //   {
-    //     sendTo: friend,
-    //     movieId: id,
-    //     message: message,
-    //   },
-    //   config
-    // );
     dispatch(
       sendMessage({
         sendTo: friend,
@@ -84,10 +73,12 @@ function MovieDetailsView() {
       }
       setLoading(false);
     };
-    dispatch(getMovies());
-    dispatch(getFriends());
+    if (user) {
+      dispatch(getMovies());
+      dispatch(getFriends());
+    }
     getMovie();
-  }, [id, dispatch]);
+  }, [id, dispatch, user]);
 
   useEffect(() => {
     if (user) {
@@ -102,9 +93,12 @@ function MovieDetailsView() {
         <ShareModal
           close={() => setShowModal(!showModal)}
           onSubmit={handleShare}
+          friends={friends}
         />
       )}
-      {loading && <Loader />}
+      {loading || movieStatus === "loading" || friendStatus === "loading" ? (
+        <Loader />
+      ) : null}
       {error && <h1>{error}</h1>}
       {movieInfo.movie && (
         <div className="movieDetail__container">
@@ -192,21 +186,6 @@ function MovieDetailsView() {
               {user && (
                 <Grow in={true} timeout={2500}>
                   <div className="movieDetail__share">
-                    {/* <p>
-                  Release: <strong>{movieInfo.movie.release_date}</strong>
-                </p>
-                <p>
-                  Rating: <strong>{movieInfo.movie.vote_average}</strong>
-                </p>
-                <p>
-                  Votes: <strong>{movieInfo.movie.vote_count}</strong>
-                </p>
-                {movieInfo.movie.budget !== 0 && (
-                  <p>
-                    Budget: <strong>${movieInfo.movie.budget}</strong>
-                  </p>
-                )} */}
-
                     <ShareIcon
                       fontSize="large"
                       style={{ marginRight: "10px" }}
@@ -227,8 +206,8 @@ function MovieDetailsView() {
               )}
             </div>
           </div>
-          <div className="movieDetail__row">
-            <Grow in={true} timeout={2000}>
+          <Grow in={true} timeout={2000}>
+            <div className="movieDetail__row">
               <div>
                 <div className="movieDetail__title">
                   <DescriptionIcon />
@@ -237,8 +216,18 @@ function MovieDetailsView() {
 
                 <p>{movieInfo.movie.overview}</p>
               </div>
-            </Grow>
-          </div>
+            </div>
+          </Grow>
+          <Grow in={true} timeout={2000}>
+            <div className="movieDetail__row">
+              <MovieTable
+                release={movieInfo.movie.release_date}
+                rating={movieInfo.movie.vote_average}
+                votes={movieInfo.movie.vote_count}
+                budget={movieInfo.movie.budget}
+              />
+            </div>
+          </Grow>
         </div>
       )}
     </div>

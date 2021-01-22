@@ -5,80 +5,91 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-} from '@material-ui/core';
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import HomeIcon from '@material-ui/icons/Home';
-import StarIcon from '@material-ui/icons/Star';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { useDispatch, useSelector } from 'react-redux';
-import { signOut } from '../../redux/userSlice';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-
+} from "@material-ui/core";
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import HomeIcon from "@material-ui/icons/Home";
+import StarIcon from "@material-ui/icons/Star";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import TrendingUpIcon from "@material-ui/icons/TrendingUp";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../../redux/userSlice";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import PersonIcon from "@material-ui/icons/Person";
 function CustomDrawer({ open, onClose }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { user } = useSelector((state) => state.user);
   return (
-    <Drawer anchor='top' open={open} onClose={onClose}>
+    <Drawer anchor="top" open={open} onClose={onClose}>
       <List>
-        <Link to='/' style={{ color: 'black' }}>
+        <Link to="/" style={{ color: "black" }}>
           <ListItem button>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary='Home' />
+            <ListItemText primary="Home" />
           </ListItem>
         </Link>
-        <Link to='/toprated' style={{ color: 'black' }}>
+        <Link to="/toprated" style={{ color: "black" }}>
           <ListItem button>
             <ListItemIcon>
               <StarIcon />
             </ListItemIcon>
-            <ListItemText primary='Top Rated' />
+            <ListItemText primary="Top Rated" />
           </ListItem>
         </Link>
-        <Link to='/popular' style={{ color: 'black' }}>
+        <Link to="/popular" style={{ color: "black" }}>
           <ListItem button>
             <ListItemIcon>
               <ThumbUpIcon />
             </ListItemIcon>
-            <ListItemText primary='Popular' />
+            <ListItemText primary="Popular" />
           </ListItem>
         </Link>
-        <Link to='/trending' style={{ color: 'black' }}>
+        <Link to="/trending" style={{ color: "black" }}>
           <ListItem button>
             <ListItemIcon>
               <TrendingUpIcon />
             </ListItemIcon>
-            <ListItemText primary='Trending' />
+            <ListItemText primary="Trending" />
           </ListItem>
         </Link>
-        <Link to='/upcoming' style={{ color: 'black' }}>
+        <Link to="/upcoming" style={{ color: "black" }}>
           <ListItem button>
             <ListItemIcon>
               <ArrowUpwardIcon />
             </ListItemIcon>
-            <ListItemText primary='Upcoming' />
+            <ListItemText primary="Upcoming" />
           </ListItem>
         </Link>
       </List>
       <Divider />
       <List>
         {user && (
-          <ListItem button>
-            <ListItemIcon>
-              <FavoriteIcon />
-            </ListItemIcon>
-            <ListItemText
-              primary='Favorites'
-              onClick={() => history.push('/favorites')}
-            />
-          </ListItem>
+          <>
+            <ListItem button>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Profile"
+                onClick={() => history.push("/profile")}
+              />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <FavoriteIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Favorites"
+                onClick={() => history.push("/favorites")}
+              />
+            </ListItem>
+          </>
         )}
         {user ? (
           <ListItem button>
@@ -86,17 +97,17 @@ function CustomDrawer({ open, onClose }) {
               <ExitToAppIcon />
             </ListItemIcon>
             <ListItemText
-              primary='Logout'
+              primary="Logout"
               onClick={() => dispatch(signOut())}
             />
           </ListItem>
         ) : (
-          <Link to='/login' style={{ color: 'black' }}>
+          <Link to="/login" style={{ color: "black" }}>
             <ListItem button>
               <ListItemIcon>
                 <VpnKeyIcon />
               </ListItemIcon>
-              <ListItemText primary='Login' />
+              <ListItemText primary="Login" />
             </ListItem>
           </Link>
         )}
