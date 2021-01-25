@@ -1,35 +1,35 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from ".././utils/axios";
 
-export const getFriends = createAsyncThunk("User/GetFriends", async () => {
-  const { data } = await axios.get(`/api/User/GetFriends`);
+export const getFriends = createAsyncThunk("Friend/GetFriends", async () => {
+  const { data } = await axios.get(`/api/Friend/GetFriends`);
   return data;
 });
 
-export const getUsers = createAsyncThunk("User/GetUsers", async () => {
-  const { data } = await axios.get("api/User/GetUsers");
+export const getUsers = createAsyncThunk("Friend/GetUsers", async () => {
+  const { data } = await axios.get("api/Account/GetUsers");
   return data;
 });
 
 export const getFriendRequests = createAsyncThunk(
-  "User/GetFriendRequests",
+  "Friend/GetFriendRequests",
   async () => {
-    const { data } = await axios.get(`/api/User/GetFriendRequests`);
+    const { data } = await axios.get(`/api/Friend/GetFriendRequests`);
     return data;
   }
 );
 
 export const sendFriendRequest = createAsyncThunk(
-  "User/SendFriendRequest",
+  "Friend/SendFriendRequest",
   async (id) => {
-    await axios.post(`api/User/SendFriendRequest/${id}`);
+    await axios.post(`api/Friend/SendFriendRequest/${id}`);
   }
 );
 
 export const acceptFriendRequest = createAsyncThunk(
-  "User/AcceptFriendRequest",
+  "Friend/AcceptFriendRequest",
   async (id) => {
-    const { data } = await axios.post(`api/User/AcceptFriendRequest/${id}`);
+    const { data } = await axios.put(`api/Friend/AcceptFriendRequest/${id}`);
     return {
       id: id,
       user: data,
@@ -38,9 +38,9 @@ export const acceptFriendRequest = createAsyncThunk(
 );
 
 export const declineFriendRequest = createAsyncThunk(
-  "User/DeclineFriendRequest",
+  "Friend/DeclineFriendRequest",
   async (id) => {
-    await axios.post(`api/User/DeclineFriendRequest/${id}`);
+    await axios.put(`api/Friend/DeclineFriendRequest/${id}`);
     return id;
   }
 );
@@ -88,7 +88,6 @@ const friendSlice = createSlice({
       state.friendRequests = state.friendRequests.filter(
         (request) => request.id !== action.payload.id
       );
-      console.log(action.payload.user);
       state.friends.push(action.payload.user);
     },
     [acceptFriendRequest.rejected]: (state, action) => {

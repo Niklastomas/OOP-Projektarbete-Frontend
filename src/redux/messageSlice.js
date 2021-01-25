@@ -2,21 +2,26 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from ".././utils/axios";
 
 export const getMessages = createAsyncThunk("Messages/Get", async () => {
-  const { data } = await axios.get(`/api/User/GetMessages`);
+  const { data } = await axios.get(`/api/Message/GetMessages`);
   return data;
 });
 
 export const sendMessage = createAsyncThunk(
   "Messages/Post",
-  async ({ sendTo, movieId, message }) => {
-    await axios.post(`/api/User/SendMessage`, { sendTo, movieId, message });
+  async ({ sentBy, sendTo, movieId, message }) => {
+    await axios.post(`/api/Message/SendMessage`, {
+      sentBy,
+      sendTo,
+      movieId,
+      message,
+    });
   }
 );
 
 export const markMessageAsRead = createAsyncThunk(
   "Messages/MarkAsRead",
   async (id) => {
-    await axios.post(`/api/User/MarkMessageAsRead/${id}`);
+    await axios.put(`/api/Message/MarkMessageAsRead/${id}`);
     return id;
   }
 );

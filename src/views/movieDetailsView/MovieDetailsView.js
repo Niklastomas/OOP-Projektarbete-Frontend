@@ -53,6 +53,7 @@ function MovieDetailsView() {
   const handleShare = async ({ friend, message }) => {
     dispatch(
       sendMessage({
+        sentBy: user.username,
         sendTo: friend,
         movieId: id,
         message: message,

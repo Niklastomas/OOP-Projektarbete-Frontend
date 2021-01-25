@@ -2,19 +2,21 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from ".././utils/axios";
 
 export const getMovies = createAsyncThunk("Movies/Get", async () => {
-  const { data } = await axios.get("/api/User/GetMovies");
+  const { data } = await axios.get("/api/UsersMovies/GetMovies");
   return data;
 });
 
 export const addMovie = createAsyncThunk("Movies/Post", async (movieId) => {
-  const { data } = await axios.post(`/api/User/AddMovie/${movieId}`);
+  const { data } = await axios.post(`/api/UsersMovies/AddMovie/${movieId}`);
   return data;
 });
 
 export const deleteMovie = createAsyncThunk(
   "Movies/Delete",
   async (movieId) => {
-    const { data } = await axios.delete(`/api/User/DeleteMovie/${movieId}`);
+    const { data } = await axios.delete(
+      `/api/UsersMovies/DeleteMovie/${movieId}`
+    );
     return data;
   }
 );
@@ -58,7 +60,7 @@ const movieSlice = createSlice({
     [deleteMovie.fulfilled]: (state, action) => {
       state.status = "succeeded";
       state.movies = state.movies.filter(
-        (movie) => movie.id !== action.payload
+        (movie) => movie.id !== action.payload.id
       );
     },
     [deleteMovie.rejected]: (state, action) => {
