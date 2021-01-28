@@ -6,31 +6,31 @@ import {
   InputAdornment,
   InputLabel,
   makeStyles,
-} from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
-import React, { useState } from 'react';
-import './LoginForm.css';
+} from "@material-ui/core";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
+import React, { useState } from "react";
+import "./LoginForm.css";
 
 const useStyles = makeStyles({
   root: {
-    '& label.Mui-focused': {
-      color: '#e50914',
+    "& label.Mui-focused": {
+      color: "#e50914",
     },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#e50914',
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#e50914",
     },
-    '& .MuiInput-input': {
-      color: 'white',
-      padding: '10px 0',
+    "& .MuiInput-input": {
+      color: "white",
+      padding: "10px 0",
     },
-    '& .MuiInput-formControl': {
-      color: 'white',
+    "& .MuiInput-formControl": {
+      color: "white",
     },
-    '& label': {
-      color: 'white',
+    "& label": {
+      color: "white",
     },
-    '& .MuiInput-underline:before': {
-      borderBottomColor: 'white',
+    "& .MuiInput-underline:before": {
+      borderBottomColor: "white",
     },
   },
 });
@@ -39,8 +39,8 @@ function LoginForm({ onSubmit }) {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [input, setInput] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -56,41 +56,44 @@ function LoginForm({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(input);
-    console.log('submit');
+    if (input.email && input.password) {
+      onSubmit(input);
+    }
   };
   return (
-    <form onSubmit={handleSubmit} className='loginForm'>
-      <FormControl classes={classes} style={{ width: '250px' }}>
-        <InputLabel htmlFor='email'>Email</InputLabel>
+    <form onSubmit={handleSubmit} className="loginForm">
+      <FormControl classes={classes} style={{ width: "250px" }}>
+        <InputLabel htmlFor="email">Email</InputLabel>
         <Input
           required
-          id='email'
-          type='email'
+          placeholder="Email"
+          id="email"
+          type="email"
           value={input.email}
-          name='email'
+          name="email"
           onChange={handleChange}
         />
       </FormControl>
-      <FormControl classes={classes} style={{ width: '250px' }}>
-        <InputLabel htmlFor='password'>Password</InputLabel>
+      <FormControl classes={classes} style={{ width: "250px" }}>
+        <InputLabel htmlFor="password">Password</InputLabel>
         <Input
           required
-          id='password'
-          type={showPassword ? 'text' : 'password'}
+          placeholder="Password"
+          id="password"
+          type={showPassword ? "text" : "password"}
           value={input.password}
-          name='password'
+          name="password"
           onChange={handleChange}
           endAdornment={
-            <InputAdornment position='end'>
+            <InputAdornment position="end">
               <IconButton
-                aria-label='toggle password visibility'
+                aria-label="toggle password visibility"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <Visibility style={{ color: 'white' }} />
+                  <Visibility style={{ color: "white" }} />
                 ) : (
-                  <VisibilityOff style={{ color: 'white' }} />
+                  <VisibilityOff style={{ color: "white" }} />
                 )}
               </IconButton>
             </InputAdornment>
@@ -98,11 +101,11 @@ function LoginForm({ onSubmit }) {
         />
       </FormControl>
       <Button
-        type='submit'
+        type="submit"
         style={{
-          backgroundColor: '#e50914',
-          color: 'white',
-          margin: '10px 0',
+          backgroundColor: "#e50914",
+          color: "white",
+          margin: "10px 0",
         }}
       >
         Login

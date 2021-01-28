@@ -6,31 +6,32 @@ import {
   InputAdornment,
   InputLabel,
   makeStyles,
-} from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
-import React, { useState } from 'react';
-import './RegisterForm.css';
+} from "@material-ui/core";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
+import React, { useState } from "react";
+import ErrorAlert from "../alerts/ErrorAlert";
+import "./RegisterForm.css";
 
 const useStyles = makeStyles({
   root: {
-    '& label.Mui-focused': {
-      color: '#e50914',
+    "& label.Mui-focused": {
+      color: "#e50914",
     },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#e50914',
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#e50914",
     },
-    '& .MuiInput-input': {
-      color: 'white',
-      padding: '10px 0',
+    "& .MuiInput-input": {
+      color: "white",
+      padding: "10px 0",
     },
-    '& .MuiInput-formControl': {
-      color: 'white',
+    "& .MuiInput-formControl": {
+      color: "white",
     },
-    '& label': {
-      color: 'white',
+    "& label": {
+      color: "white",
     },
-    '& .MuiInput-underline:before': {
-      borderBottomColor: 'white',
+    "& .MuiInput-underline:before": {
+      borderBottomColor: "white",
     },
   },
 });
@@ -39,11 +40,12 @@ function RegisterForm({ onSubmit }) {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const [input, setInput] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -59,68 +61,80 @@ function RegisterForm({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(input);
-
-    console.log('submit');
+    if (input.email && input.password && input.confirmPassword) {
+      if (input.password === input.confirmPassword) {
+        onSubmit(input);
+      } else {
+        setError("Password do not match");
+      }
+    }
   };
   return (
     <>
-      <form onSubmit={handleSubmit} className='registerForm'>
-        <FormControl classes={classes} style={{ width: '250px' }}>
-          <InputLabel htmlFor='email'>Email</InputLabel>
+      {error && (
+        <ErrorAlert open={error ? true : false} onClose={() => setError(null)}>
+          {error}
+        </ErrorAlert>
+      )}
+      <form onSubmit={handleSubmit} className="registerForm">
+        <FormControl classes={classes} style={{ width: "250px" }}>
+          <InputLabel htmlFor="email">Email</InputLabel>
           <Input
             required
-            id='email'
-            type='email'
+            placeholder="Email"
+            id="email"
+            type="email"
             value={input.email}
-            name='email'
+            name="email"
             onChange={handleChange}
           />
         </FormControl>
-        <FormControl classes={classes} style={{ width: '250px' }}>
-          <InputLabel htmlFor='password'>Password</InputLabel>
+        <FormControl classes={classes} style={{ width: "250px" }}>
+          <InputLabel htmlFor="password">Password</InputLabel>
           <Input
             required
-            id='password'
-            type={showPassword ? 'text' : 'password'}
+            placeholder="Password"
+            id="password"
+            type={showPassword ? "text" : "password"}
             value={input.password}
-            name='password'
+            name="password"
             onChange={handleChange}
             endAdornment={
-              <InputAdornment position='end'>
+              <InputAdornment position="end">
                 <IconButton
-                  aria-label='toggle password visibility'
+                  aria-label="toggle password visibility"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <Visibility style={{ color: 'white' }} />
+                    <Visibility style={{ color: "white" }} />
                   ) : (
-                    <VisibilityOff style={{ color: 'white' }} />
+                    <VisibilityOff style={{ color: "white" }} />
                   )}
                 </IconButton>
               </InputAdornment>
             }
           />
         </FormControl>
-        <FormControl classes={classes} style={{ width: '250px' }}>
-          <InputLabel htmlFor='comfirm-password'>Confirm Password</InputLabel>
+        <FormControl classes={classes} style={{ width: "250px" }}>
+          <InputLabel htmlFor="comfirm-password">Confirm Password</InputLabel>
           <Input
             required
-            id='confirm-password'
-            type={showConfirmPassword ? 'text' : 'password'}
+            placeholder="Confirm Password"
+            id="confirm-password"
+            type={showConfirmPassword ? "text" : "password"}
             value={input.confirmPassword}
-            name='confirmPassword'
+            name="confirmPassword"
             onChange={handleChange}
             endAdornment={
-              <InputAdornment position='end'>
+              <InputAdornment position="end">
                 <IconButton
-                  aria-label='toggle password visibility'
+                  aria-label="toggle password visibility"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                   {showConfirmPassword ? (
-                    <Visibility style={{ color: 'white' }} />
+                    <Visibility style={{ color: "white" }} />
                   ) : (
-                    <VisibilityOff style={{ color: 'white' }} />
+                    <VisibilityOff style={{ color: "white" }} />
                   )}
                 </IconButton>
               </InputAdornment>
@@ -128,12 +142,12 @@ function RegisterForm({ onSubmit }) {
           />
         </FormControl>
         <Button
-          type='submit'
+          type="submit"
           style={{
-            backgroundColor: '#e50914',
-            color: 'white',
-            margin: '10px 0',
-            width: '250px',
+            backgroundColor: "#e50914",
+            color: "white",
+            margin: "10px 0",
+            width: "250px",
           }}
         >
           Register

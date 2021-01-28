@@ -23,9 +23,11 @@ function FriendRequest({ id, sentBy, time }) {
     <div className="friendRequest">
       <div className="friendRequest__container">
         <h3>{sentBy.username}</h3>
-        <small>
-          Sent <TimeAgo date={new Date(time).toUTCString()} />
-        </small>
+        {time && (
+          <small>
+            Sent time && <TimeAgo date={new Date(time).toUTCString()} />
+          </small>
+        )}
       </div>
       <div className="friendRequest__container">
         <CheckIcon
