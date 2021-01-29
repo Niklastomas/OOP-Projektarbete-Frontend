@@ -7,9 +7,9 @@ function FriendList({ friends }) {
     <div className="friendList">
       {friends && friends.length > 0 ? (
         friends.map((friend) => (
-          <>
-            <Friend key={friend.id} name={friend.username} />
-          </>
+          <div key={friend.id}>
+            <Friend name={friend.username} />
+          </div>
         ))
       ) : (
         <h3 style={{ color: "white" }}>Friend list is empty</h3>
